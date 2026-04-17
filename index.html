@@ -4,338 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Continuous Import Bond Calculator</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #003d7a 0%, #1a5fab 100%);
-            padding: 40px 20px;
-            text-align: center;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.95;
-            margin-bottom: 20px;
-        }
-
-        .logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .logo-top {
-            margin-bottom: 20px;
-            width: 100%;
-            text-align: center;
-            
-        }
-
-        .wwl-logo {
-            height: 80px;
-            object-fit: contain;
-        }
-
-        .logos img {
-            height: 50px;
-            object-fit: contain;
-        }
-
-        .chb-small-logo {
-            height: 45px;
-            object-fit: contain;
-        }
-
-        .chb-logo {
-            height: 60px;
-            object-fit: contain;
-        }
-
-        .content {
-            padding: 40px;
-        }
-
-        .info-box {
-            background: #e3f2fd;
-            border-left: 4px solid #003d7a;
-            padding: 15px;
-            margin-bottom: 30px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            color: #1a3a52;
-        }
-
-        .calculator-section {
-            background: #f9f9f9;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #003d7a;
-            font-size: 0.95rem;
-        }
-
-        .form-group small {
-            display: block;
-            color: #666;
-            font-size: 0.85rem;
-            margin-top: 4px;
-            font-weight: normal;
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .input-group input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #003d7a;
-            box-shadow: 0 0 0 3px rgba(0, 61, 122, 0.1);
-        }
-
-        .input-group .currency {
-            font-weight: 600;
-            color: #003d7a;
-            min-width: 30px;
-        }
-
-        .input-group .percentage {
-            font-weight: 600;
-            color: #003d7a;
-            min-width: 20px;
-        }
-
-        .row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 600px) {
-            .row {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .results {
-            background: linear-gradient(135deg, #003d7a 0%, #1a5fab 100%);
-            padding: 30px;
-            border-radius: 8px;
-            color: white;
-            margin-top: 30px;
-        }
-
-        .results h2 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            opacity: 0.9;
-        }
-
-        .result-item {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .result-label {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            margin-bottom: 5px;
-        }
-
-        .result-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-calculate {
-            background: #d32f2f;
-            color: white;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .btn-calculate:hover {
-            background: #b71c1c;
-            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
-        }
-
-        .btn-reset {
-            background: #ccc;
-            color: #333;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .btn-reset:hover {
-            background: #aaa;
-        }
-
-        .footer {
-            background: #f5f5f5;
-            padding: 20px 40px;
-            text-align: center;
-            color: #666;
-            font-size: 0.85rem;
-            border-top: 1px solid #e0e0e0;
-        }
-
-        .footer p {
-            margin: 0;
-            line-height: 1.6;
-        }
-
-        .note {
-            background: #fff3cd;
-            border-left: 4px solid #ffc107;
-            padding: 12px;
-            margin-top: 15px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            color: #856404;
-        }
-
-        .toggle-group {
-            display: flex;
-            gap: 30px;
-            margin: 20px 0 25px 0;
-            padding: 15px;
-            background: #f0f4f8;
-            border-radius: 6px;
-        }
-
-        .toggle-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            color: #003d7a;
-        }
-
-        .toggle-label input[type="radio"] {
-            cursor: pointer;
-            width: 18px;
-            height: 18px;
-        }
-
-        .insufficiency-section {
-            background: #fff8f0;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            border: 1px solid #ffe0d0;
-        }
-
-        .btn-secondary {
-            background: #1a5fab;
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: #003d7a;
-            box-shadow: 0 4px 12px rgba(0, 61, 122, 0.3);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
+
+        <!-- Header -->
         <div class="header">
             <div class="logo-top">
-                <img src="https://raw.githubusercontent.com/wwl-sb/ctb-calculator/refs/heads/main/WWL_Group_HorizontalWhiteRed%40400x.png" alt="Worldwide Logistics Group Logo" class="wwl-logo">
+                <img src="https://raw.githubusercontent.com/wwl-sb/ctb-calculator/refs/heads/main/WWL_Group_HorizontalWhiteRed%40400x.png"
+                     alt="Worldwide Logistics Group Logo" class="wwl-logo">
             </div>
             <h1>Continuous Import Bond Calculator</h1>
             <p>Determine your minimum bond requirement for continuous importation</p>
         </div>
 
         <div class="content">
+
+            <!-- Info Box -->
             <div class="info-box">
-                <strong>How it works:</strong> A Continuous Import Bond is required by U.S. Customs for regular importers. Enter your anticipated annual import values below to calculate the minimum bond amount required (typically 10% of your annual duties).
+                <strong>How it works:</strong> A Continuous Import Bond is required by U.S. Customs for regular importers.
+                Enter your anticipated annual import values below to calculate the minimum bond amount required
+                (typically 10% of your annual duties).
             </div>
 
+            <!-- Main Calculator -->
             <div class="calculator-section">
                 <h2 style="color: #003d7a; margin-bottom: 20px;">Import Information</h2>
 
@@ -372,12 +65,20 @@
                     <button class="btn-calculate" onclick="calculateBond()">Calculate Bond</button>
                     <button class="btn-reset" onclick="resetForm()">Reset</button>
                 </div>
-                <button class="btn-secondary" onclick="toggleInsufficientBondSection()" style="width: 100%; margin-top: 20px;">Need to Adjust Bond Due to CBP Notice?</button>
+
+                <button class="btn-secondary" onclick="toggleInsufficientBondSection()"
+                        style="width: 100%; margin-top: 20px;">
+                    Need to Adjust Bond Due to CBP Notice?
+                </button>
             </div>
 
+            <!-- CBP Insufficiency Section (hidden by default) -->
             <div class="insufficiency-section" id="insufficiencySection" style="display: none;">
                 <h2 style="color: #003d7a; margin-bottom: 20px;">CBP Insufficiency Notice - Bond Adjustment</h2>
-                <p style="color: #666; margin-bottom: 20px;">If you received a bond insufficiency notice from CBP, enter your current bond details below to calculate the new required bond amount.</p>
+                <p style="color: #666; margin-bottom: 20px;">
+                    If you received a bond insufficiency notice from CBP, enter your current bond details below
+                    to calculate the new required bond amount.
+                </p>
 
                 <div class="row">
                     <div class="form-group">
@@ -405,9 +106,13 @@
                     <small>Percentage of your bond that has been used/claimed (leave at 0 if not applicable)</small>
                 </div>
 
-                <button class="btn-calculate" onclick="calculateInsufficientBond()" style="width: 100%; margin-top: 20px;">Calculate Required Bond Increase</button>
+                <button class="btn-calculate" onclick="calculateInsufficientBond()"
+                        style="width: 100%; margin-top: 20px;">
+                    Calculate Required Bond Increase
+                </button>
             </div>
 
+            <!-- Results Panel (hidden by default) -->
             <div class="results" id="results" style="display: none;">
                 <h2>Calculation Results</h2>
                 <div class="result-item">
@@ -425,247 +130,34 @@
                     <div class="result-value" id="displayBondAmount">$0.00</div>
                 </div>
                 <div class="note">
-                    <strong>Note:</strong> Minimum bond amount is $50,000. This calculator provides an estimate. Actual bond requirements may vary based on specific commodities, country of origin, and CBP assessment. Consult with a licensed customs broker for exact requirements.
+                    <strong>Note:</strong> Minimum bond amount is $50,000. This calculator provides an estimate.
+                    Actual bond requirements may vary based on specific commodities, country of origin, and CBP assessment.
+                    Consult with a licensed customs broker for exact requirements.
                 </div>
-
-                <button class="btn-secondary" onclick="toggleInsufficientBondSection()" style="width: 100%; margin-top: 20px;">Need to Adjust Bond Due to CBP Notice?</button>
+                <button class="btn-secondary" onclick="toggleInsufficientBondSection()"
+                        style="width: 100%; margin-top: 20px;">
+                    Need to Adjust Bond Due to CBP Notice?
+                </button>
             </div>
-        </div>
 
+        </div><!-- /content -->
+
+        <!-- Footer -->
         <div class="footer">
             <div class="logos">
-                <img src="https://raw.githubusercontent.com/wwl-sb/ctb-calculator/refs/heads/main/CHB_Icon.png" alt="CHB Logo" class="chb-small-logo">
+                <img src="https://raw.githubusercontent.com/wwl-sb/ctb-calculator/refs/heads/main/CHB_Icon.png"
+                     alt="CHB Logo" class="chb-small-logo">
             </div>
             <p>80 Route 4 East, Suite 290 | Paramus, New Jersey 07652</p>
-            <a href="tel:+12015560909">(201) 556-0909</a> | <a href="mailto:chb-bonds@wwllmail.com">chb-bonds@wwllmail.com</a>
-            <p style="margin-top: 10px; opacity: 0.7;">This calculator is for informational purposes only and does not constitute customs brokerage advice.</p>
+            <a href="tel:+12015560909">(201) 556-0909</a> |
+            <a href="mailto:chb-bonds@wwllmail.com">chb-bonds@wwllmail.com</a>
+            <p style="margin-top: 10px; opacity: 0.7;">
+                This calculator is for informational purposes only and does not constitute customs brokerage advice.
+            </p>
         </div>
-    </div>
 
-    <script>
-        function calculateBond() {
-            const annualValue = parseFloat(document.getElementById('annualValue').value) || 0;
-            const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
-            const bondPercentage = parseFloat(document.getElementById('bondPercentage').value) || 10;
+    </div><!-- /container -->
 
-            if (annualValue <= 0) {
-                alert('Please enter a valid annual import value.');
-                return;
-            }
-
-            // Calculate estimated annual duties
-            const annualDuties = annualValue * (dutyRate / 100);
-
-            // Calculate minimum bond (as a percentage of annual duties)
-            const minimumBond = annualDuties * (bondPercentage / 100);
-
-            // Display results
-            document.getElementById('displayAnnualValue').textContent = '$' + annualValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('displayAnnualDuties').textContent = '$' + annualDuties.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('displayBondAmount').textContent = '$' + minimumBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-            document.getElementById('results').style.display = 'block';
-        }
-
-        function resetForm() {
-            document.getElementById('annualValue').value = '';
-            document.getElementById('dutyRate').value = '5';
-            document.getElementById('bondPercentage').value = '10';
-            document.getElementById('results').style.display = 'none';
-        }
-
-        // Toggle between duty rate and anticipated duty
-        document.querySelectorAll('input[name="dutyInput"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                const dutyRateLabel = document.getElementById('dutyRateLabel');
-                const dutyRateSmall = document.getElementById('dutyRateSmall');
-                const dutyRatePercent = document.getElementById('dutyRatePercent');
-                const dutyRateInput = document.getElementById('dutyRate');
-                
-                if (this.value === 'anticipated') {
-                    dutyRateLabel.textContent = 'Estimated Duty for Next 12 Months*';
-                    dutyRateSmall.textContent = 'Total duties anticipated to be owed during the next 12 months';
-                    dutyRatePercent.textContent = '$';
-                    dutyRateInput.placeholder = '50,000';
-                    dutyRateInput.step = '100';
-                    dutyRateInput.type = 'number';
-                } else {
-                    dutyRateLabel.textContent = 'Estimated Duty Rate';
-                    dutyRateSmall.textContent = 'Average duty rate on imported goods';
-                    dutyRatePercent.textContent = '%';
-                    dutyRateInput.placeholder = '5';
-                    dutyRateInput.step = '0.1';
-                    dutyRateInput.value = '5';
-                    dutyRateInput.max = '100';
-                }
-                if (document.getElementById('annualValue').value) calculateBond();
-            });
-        });
-
-        function toggleInsufficientBondSection() {
-            const section = document.getElementById('insufficiencySection');
-            const results = document.getElementById('results');
-            section.style.display = section.style.display === 'none' ? 'block' : 'none';
-            
-            // Scroll to insufficiency section
-            if (section.style.display === 'block') {
-                setTimeout(() => section.scrollIntoView({ behavior: 'smooth' }), 100);
-            }
-        }
-
-        function calculateBond() {
-            let annualDuties = 0;
-            const dutyInput = document.querySelector('input[name="dutyInput"]:checked').value;
-
-            if (dutyInput === 'rate') {
-                const annualValue = parseFloat(document.getElementById('annualValue').value) || 0;
-                const dutyRate = parseFloat(document.getElementById('dutyRate').value) || 0;
-
-                if (annualValue <= 0) {
-                    alert('Please enter a valid annual import value.');
-                    return;
-                }
-
-                annualDuties = annualValue * (dutyRate / 100);
-            } else {
-                annualDuties = parseFloat(document.getElementById('dutyRate').value) || 0;
-
-                if (annualDuties <= 0) {
-                    alert('Please enter estimated anticipated duties.');
-                    return;
-                }
-            }
-
-            // Calculate minimum bond: 10% of annual duties, minimum $50,000
-            let minimumBond = annualDuties * 0.10;
-            minimumBond = Math.max(minimumBond, 50000);
-
-            // Display results
-            if (dutyInput === 'rate') {
-                const annualValue = parseFloat(document.getElementById('annualValue').value) || 0;
-                document.getElementById('displayAnnualValue').textContent = '$' + annualValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            } else {
-                document.getElementById('displayAnnualValue').textContent = 'See anticipated duties below';
-            }
-
-            document.getElementById('displayAnnualDuties').textContent = '$' + annualDuties.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('displayBondAmount').textContent = '$' + minimumBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-
-            document.getElementById('results').style.display = 'block';
-            document.getElementById('insufficiencySection').style.display = 'none';
-
-            // Store calculated duties for insufficiency calculation
-            window.calculatedDuties = annualDuties;
-        }
-
-        function calculateInsufficientBond() {
-            const currentBond = parseFloat(document.getElementById('currentBondAmount').value) || 0;
-            const anniversaryDate = document.getElementById('bondAnniversaryDate').value;
-            const bondSaturation = parseFloat(document.getElementById('bondSaturation').value) || 0;
-
-            if (!currentBond || currentBond <= 0) {
-                alert('Please enter your current bond amount.');
-                return;
-            }
-
-            if (!anniversaryDate || !anniversaryDate.match(/^\d{2}\/\d{2}$/)) {
-                alert('Please enter bond anniversary date in MM/DD format.');
-                return;
-            }
-
-            // Parse anniversary date
-            const [month, day] = anniversaryDate.split('/');
-            const today = new Date();
-            let anniversaryThisYear = new Date(today.getFullYear(), parseInt(month) - 1, parseInt(day));
-
-            // If anniversary has already passed this year, calculate for next year's period
-            if (anniversaryThisYear < today) {
-                anniversaryThisYear = new Date(today.getFullYear() + 1, parseInt(month) - 1, parseInt(day));
-            }
-
-            // Calculate anticipated duties payable during 12-month period after bond effective date
-            const anticipatedDutiesDuring12Months = window.calculatedDuties || 0;
-
-            if (anticipatedDutiesDuring12Months <= 0) {
-                alert('Please calculate initial bond first to determine anticipated duties.');
-                return;
-            }
-
-            // Calculate available bond after saturation
-            const availableBond = currentBond * ((100 - bondSaturation) / 100);
-
-            // Calculate shortfall
-            const requiredBond = Math.max(anticipatedDutiesDuring12Months * 0.10, 50000);
-            const shortfall = Math.max(requiredBond - availableBond, 0);
-
-            // Calculate new total bond needed
-            const newTotalBond = currentBond + shortfall;
-
-            // Display insufficiency results
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = `
-                <h2>Bond Insufficiency Calculation Results</h2>
-                <div class="result-item">
-                    <div class="result-label">Current Bond Amount</div>
-                    <div class="result-value">$${currentBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Bond Saturation (Used/Claimed)</div>
-                    <div class="result-value">${bondSaturation.toFixed(1)}%</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Available Bond Remaining</div>
-                    <div class="result-value">$${availableBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Anticipated Duties During Next 12 Months</div>
-                    <div class="result-value">$${anticipatedDutiesDuring12Months.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Required Bond (10% of anticipated duties, minimum $50,000)</div>
-                    <div class="result-value">$${requiredBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="result-item">
-                    <div class="result-label">Bond Shortfall</div>
-                    <div class="result-value">$${shortfall.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="result-item" style="border-bottom: none;">
-                    <div class="result-label" style="font-size: 1rem; opacity: 1; font-weight: 700;">
-                        ⚡ New Total Bond Amount Required
-                    </div>
-                    <div class="result-value">$${newTotalBond.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                </div>
-                <div class="note">
-                    <strong>Action Required:</strong> You will need to increase your continuous import bond by $${shortfall.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} to maintain compliance with CBP requirements. Contact your surety or customs broker immediately.
-                </div>
-            `;
-            resultsDiv.style.display = 'block';
-        }
-
-        // Allow Enter key to calculate
-        document.addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                const dutyInput = document.querySelector('input[name="dutyInput"]:checked').value;
-                if (document.getElementById('insufficiencySection').style.display === 'block') {
-                    calculateInsufficientBond();
-                } else {
-                    calculateBond();
-                }
-            }
-        });
-
-        // Real-time calculation as user types
-        document.getElementById('annualValue').addEventListener('input', function() {
-            if (this.value) calculateBond();
-        });
-
-        document.getElementById('dutyRate').addEventListener('input', function() {
-            if (document.getElementById('annualValue').value) calculateBond();
-        });
-
-        document.getElementById('anticipatedDuty').addEventListener('input', function() {
-            if (this.value) calculateBond();
-        });
-    </script>
+    <script src="calculator.js"></script>
 </body>
 </html>
